@@ -40,7 +40,7 @@ with st.sidebar:
         selected_time = st.selectbox("Selecciona hora:", available_hours)
 
         # Calado mínimo
-        min_draft = st.number_input("Calado mínimo a mostrar (línea gris)", value=2.35, step=0.1, format="%.2f")
+        min_draft = st.number_input("Calado mínimo a mostrar (línea gris)", value=2.85, step=0.1, format="%.2f")
 
         # Calcular rango para slider
         start_time = df['timestamp'].min().to_pydatetime()
@@ -82,9 +82,9 @@ if uploaded_file is not None:
 
     # --- Cálculo de calados ---
     points = {
-        "Barra de Arena (-1.2 m LAT)": -1.2,
+        "Barra de Arena (-1.4 m LAT)": -1.4,
         "CPT-NS-01 (-3.20 m LAT)": -3.20,
-        "CPT-NS-02 (-1.58 m LAT)": -1.58
+        "CPT-NS-02 (-1.76 m LAT)": -1.76
     }
 
     results = []
