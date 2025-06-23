@@ -42,7 +42,7 @@ with st.sidebar:
         # Calado mínimo
         min_draft = st.number_input("Calado mínimo a mostrar (línea gris)", value=2.85, step=0.1, format="%.2f")
 
-        # Calcular rango para slider
+        # Rango de tiempo para visualización
         start_time = df['timestamp'].min().to_pydatetime()
         end_time = df['timestamp'].max().to_pydatetime()
         default_end = min(start_time + pd.Timedelta(hours=24), end_time)
@@ -54,6 +54,20 @@ with st.sidebar:
             value=(start_time, default_end),
             format="YYYY-MM-DD HH:mm"
         )
+
+        # Inputs para puntos de calado
+        st.markdown("---")
+        st.subheader("📍 Puntos para cálculo de calado")
+
+        barra_sand = st.number_input("Barra de Arena [m LAT]", value=-1.40, step=0.01, format="%.2f")
+        cpt_ns_01 = st.number_input("CPT-NS-01 [m LAT]", value=-3.20, step=0.01, format="%.2f")
+        cpt_ns_02 = st.number_input("CPT-NS-02 [m LAT]", value=-1.76, step=0.01, format="%.2f")
+
+        points = {
+            f"Barra de Arena ({barra_sand:.2f} m LAT)": barra_sand,
+            f"CPT-NS-01 ({cpt_ns_01:.2f} m LAT)": cpt_ns_01,
+            f"CPT-NS-02 ({cpt_ns_02:.2f} m LAT)": cpt_ns_02
+        }
 
 # --- Main content ---
 if uploaded_file is not None:
@@ -81,12 +95,6 @@ if uploaded_file is not None:
     st.table(pred_df)
 
     # --- Cálculo de calados ---
-    points = {
-        "Barra de Arena (-1.4 m LAT)": -1.4,
-        "CPT-NS-01 (-3.20 m LAT)": -3.20,
-        "CPT-NS-02 (-1.76 m LAT)": -1.76
-    }
-
     results = []
     for name, lat in points.items():
         astro = row['water_level_astro']
